@@ -1,25 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from 'react'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [optionsUp, setOptionsUp] = useState([
+        'Add transaction to blocks', 
+        'search block by hash', 
+        'search block by UUID',
+        'add new user',
+        'print user information'
+    ])
+    const [optionsDown, setOptionsDown] = useState([
+        'show last block',
+        'write users to file',
+        'write blockchain file',
+        'read user JSON',
+        'print user'
+    ])
+
+    return (
+        <div className="App">
+            <div className="Options">
+                {optionsUp.map((option, index) => (
+                    <button id='Option'>
+                        <p id='Name'>{option}</p>
+                    </button>
+                ))}
+            </div>
+            <div className="PageTitle">
+                <p id="Title">BLOCKCHAIN</p>
+            </div>
+            <div className="Options">
+                {optionsDown.map((option, index) => (
+                    <button id='Option'>
+                        <p id='Name'>{option}</p>
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default App;
