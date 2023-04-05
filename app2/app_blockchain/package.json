@@ -1,5 +1,5 @@
 {
-  "name": "blockchain",
+  "name": "app_blockchain",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
