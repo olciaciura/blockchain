@@ -16,7 +16,7 @@ export const Menu = props => {
             </div>
             <div className="Options">
                 {props.optionsDown.map((option, index) => (
-                    <button id='Option'>
+                    <button id='Option' onClick={() => {props.setAppState(option)}}>
                         <p id='Name'>{option}</p>
                     </button>
                 ))}

@@ -1,34 +1,34 @@
 import React, {useEffect, useState} from 'react'
-import './SearchUser.css'
-import { showUserByName } from '../../functions/fetchApi';
+import './SearchByHash.css'
+import { findBlockByHash } from '../../functions/fetchApi';
 
-export const SearchUser = props => {
+export const SearchByHash = props => {
 
-    const [name, setName] = useState('');
+    const [hash, setHash] = useState('');
     const [queryState, setQueryState] = useState('');
     const [response, setResponse] = useState('');
 
     useEffect (() => {
         if( queryState == 'sending'){
-            showUserByName(name, setResponse);
+            findBlockByHash(hash, setResponse);
             setQueryState('');
-            setName(null);
+            setHash(null);
             console.log(queryState);
         }
     }, [queryState]);
 
     return (
-        <div className='searchUser'>
-            {   response === '' &&  
+        <div className='searchByHash'>
+            {   response === '' &&
                 <>
                     <div>
                         <button onClick={() => props.setAppState('menu')}>BACK</button>
                     </div>
                     
-                    <input type='text' className='searchUserInput' placeholder='Type name...' 
+                    <input type='text' className='searchByHashInput' placeholder='Type hash...' 
                         required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={hash}
+                        onChange={(e) => setHash(e.target.value)}
                     />
                     <button className='SearchButton' onClick={() => setQueryState('sending')}>SEND</button>
                 </>
@@ -42,10 +42,10 @@ export const SearchUser = props => {
                 
             }
             {
-                response === 'name' &&
+                response === 'hash' &&
                 <div>
                     <button onClick={() => setResponse('')}>BACK</button>
-                    <p id='Error'>bad length of name</p>
+                    <p id='Error'>bad length of hash</p>
                 </div>
             }
             {
@@ -58,4 +58,4 @@ export const SearchUser = props => {
         </div>
     )
 }
-export default SearchUser;
+export default SearchByHash;

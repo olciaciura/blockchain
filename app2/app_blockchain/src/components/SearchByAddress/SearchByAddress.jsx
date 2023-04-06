@@ -1,34 +1,33 @@
 import React, {useEffect, useState} from 'react'
-import './SearchUser.css'
-import { showUserByName } from '../../functions/fetchApi';
+import './SearchByAddress.css'
+import { showTransactionByWalletAddress } from '../../functions/fetchApi';
 
-export const SearchUser = props => {
+export const SearchByAddress = props => {
 
-    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
     const [queryState, setQueryState] = useState('');
     const [response, setResponse] = useState('');
 
     useEffect (() => {
         if( queryState == 'sending'){
-            showUserByName(name, setResponse);
+            showTransactionByWalletAddress(address, setResponse);
             setQueryState('');
-            setName(null);
+            setAddress(null);
             console.log(queryState);
         }
     }, [queryState]);
 
     return (
-        <div className='searchUser'>
-            {   response === '' &&  
+        <div className='searchByAddress'>
+            {   response === '' &&
                 <>
                     <div>
                         <button onClick={() => props.setAppState('menu')}>BACK</button>
                     </div>
-                    
-                    <input type='text' className='searchUserInput' placeholder='Type name...' 
+                    <input type='text' className='searchUserInput' placeholder='Type address...' 
                         required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
                     />
                     <button className='SearchButton' onClick={() => setQueryState('sending')}>SEND</button>
                 </>
@@ -42,20 +41,20 @@ export const SearchUser = props => {
                 
             }
             {
-                response === 'name' &&
+                response === 'address' &&
                 <div>
                     <button onClick={() => setResponse('')}>BACK</button>
-                    <p id='Error'>bad length of name</p>
+                    <p id='Error'>bad length of address</p>
                 </div>
             }
             {
                 response.constructor == Object &&
                 <div>
                     <button onClick={() => setResponse('')}>BACK</button>
-                    <p id='Error'>{response['timeOfCreation']}</p>
+                    <p id='Error'>{response['balance']}</p>
                 </div>
             }
         </div>
     )
 }
-export default SearchUser;
+export default SearchByAddress;

@@ -1,34 +1,34 @@
 import React, {useEffect, useState} from 'react'
-import './SearchUser.css'
-import { showUserByName } from '../../functions/fetchApi';
+import './SearchByUUID.css'
+import { findBlockByUUID } from '../../functions/fetchApi';
 
-export const SearchUser = props => {
+export const SearchByUUID = props => {
 
-    const [name, setName] = useState('');
+    const [uuid, setUuid] = useState('');
     const [queryState, setQueryState] = useState('');
     const [response, setResponse] = useState('');
 
     useEffect (() => {
         if( queryState == 'sending'){
-            showUserByName(name, setResponse);
+            findBlockByUUID(uuid, setResponse);
             setQueryState('');
-            setName(null);
+            setUuid(null);
             console.log(queryState);
         }
     }, [queryState]);
 
     return (
-        <div className='searchUser'>
-            {   response === '' &&  
+        <div className='searchByUUID'>
+            {   response === '' &&    
                 <>
                     <div>
                         <button onClick={() => props.setAppState('menu')}>BACK</button>
                     </div>
                     
-                    <input type='text' className='searchUserInput' placeholder='Type name...' 
+                    <input type='text' className='searchByUuidInput' placeholder='Type uuid...' 
                         required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={uuid}
+                        onChange={(e) => setUuid(e.target.value)}
                     />
                     <button className='SearchButton' onClick={() => setQueryState('sending')}>SEND</button>
                 </>
@@ -42,10 +42,10 @@ export const SearchUser = props => {
                 
             }
             {
-                response === 'name' &&
+                response === 'uuid' &&
                 <div>
                     <button onClick={() => setResponse('')}>BACK</button>
-                    <p id='Error'>bad length of name</p>
+                    <p id='Error'>bad length of uuid</p>
                 </div>
             }
             {
@@ -55,7 +55,7 @@ export const SearchUser = props => {
                     <p id='Error'>{response['timeOfCreation']}</p>
                 </div>
             }
-        </div>
+         </div>
     )
 }
-export default SearchUser;
+export default SearchByUUID;

@@ -1,34 +1,41 @@
 import React, {useEffect, useState} from 'react'
-import './SearchUser.css'
-import { showUserByName } from '../../functions/fetchApi';
+import './AddUser.css'
+import { addUser } from '../../functions/fetchApi';
 
-export const SearchUser = props => {
+export const AddUser = props => {
 
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [balance, setBalance] = useState('');
     const [queryState, setQueryState] = useState('');
     const [response, setResponse] = useState('');
 
     useEffect (() => {
         if( queryState == 'sending'){
-            showUserByName(name, setResponse);
+            addUser(username, balance, setResponse);
             setQueryState('');
-            setName(null);
+            setUsername(null);
+            setBalance(null);
             console.log(queryState);
         }
     }, [queryState]);
 
     return (
-        <div className='searchUser'>
-            {   response === '' &&  
+        <div className='addUser'>
+            { response === '' &&
                 <>
                     <div>
                         <button onClick={() => props.setAppState('menu')}>BACK</button>
                     </div>
-                    
-                    <input type='text' className='searchUserInput' placeholder='Type name...' 
+                        
+                    <input type='text' className='addUserInput' placeholder='Type username...' 
                         required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <input type='text' className='addUserInput' placeholder='Type balance...' 
+                        required
+                        value={balance}
+                        onChange={(e) => setBalance(e.target.value)}
                     />
                     <button className='SearchButton' onClick={() => setQueryState('sending')}>SEND</button>
                 </>
@@ -42,20 +49,20 @@ export const SearchUser = props => {
                 
             }
             {
-                response === 'name' &&
+                response === 'true' &&
                 <div>
                     <button onClick={() => setResponse('')}>BACK</button>
-                    <p id='Error'>bad length of name</p>
+                    <p id='Error'>Correctly added user to database</p>
                 </div>
             }
             {
-                response.constructor == Object &&
+                response === 'Name already in use' &&
                 <div>
                     <button onClick={() => setResponse('')}>BACK</button>
-                    <p id='Error'>{response['timeOfCreation']}</p>
+                    <p id='Error'>{response}</p>
                 </div>
             }
         </div>
     )
 }
-export default SearchUser;
+export default AddUser;
